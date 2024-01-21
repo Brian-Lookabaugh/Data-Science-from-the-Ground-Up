@@ -1,0 +1,47 @@
+---
+title: "Data Science from Scratch: Part 1 - Bayesian Linear Regression"
+format: html
+---
+
+## Why Bayesian Statistics?
+
+Despite starting grad school in 2018 and starting my PhD in 2020, I never developed a strong interest in the *methodology* of the social sciences until around the start of 2022. The nuances of anything beyond the most basic of statistical modeling with linear regression or "household" GLMs like logistic regression, Poisson regression, and some survival analysis always seemed too esoteric and, after all, why should I bother given that the field of research I was in seemed perfectly content to overwhelmingly rely on the aforementioned tools and nothing more?
+
+However, in the spring semester of 2022, I took an econometrics panel data course to get more methods credits on my transcript since, at the time, I thought having more "math-y" classes on my transcript might matter for getting a non-academic job. Inadvertently, it turned out to be a great thing for me. Nearing the end of the semester, we departed from the random v. fixed effects debate (which, in hindsight, was greatly mis-characterized in the class), first-differencing, incorporating lagged values, etc. and I was exposed to the synthetic control method.
+
+This is not a blog post about the synthetic control method, but I can say that its intuitive graphical appeal for interpretation left me incredibly interested. This method seemed a great deal different than "regression", and I understood its mechanics so much more. For the first time, I found myself excited about a quantitative research method. I asked a cohort of mine with a strong methods background more about synthetic controls and what broader methodological class they fall under and, one thing lead to another, and I pivoted my entire academic and professional focus to causal inference. 
+
+Over the past year and a half, anything and everything causal inference related has been what I've devoted significant academic, professional, and personal hours to studying, ranging from experimental design to methods for making causal inferences observational data to understanding the complexities of panel data, etc. But, as I learned more about causal inference, I realized how much it overlapped with other methodological topics I had heard about before. Bayesian statistics, multilevel modeling, machine learning, survival analysis, simulation, etc... they all fit into this passion of mine in their own way, and I knew I had discovered more rabbit holes.
+
+Unlike causal inference, none of these topics have developed with as much ease for me. I think it might be because I am too scatter-brained now, and, the more I learn, the more I realize how much is out there that I don't know. Going into causal inference, I was blissfully ignorant. I could easily progress from "bad practices that your field suffers from" to "you can use regression for causal inference" to "whoah, look at this cool thing called matching" to "aren't instrumental variables whacky?", etc. But now, anytime I learn anything new, I try to find and locate resources on the intersection of this new thing with all of the other things I need/want to know more about. Bayesian causal inference, Bayesian machine learning, causal machine learning, Bayesian causal machine learning, predictive Bayesian causal survival models, multilevel Bayesian marginal structural models, multilevel Bayesian survival marginal structural models... I'm sure you get the point now.
+
+This approach has not worked out for me, and I find myself stressing more about what is out there and what I don't know, rather than taking everything one step at a time. So... that is what this blog is for, and I hope that this blog will have several sequels. I'm thinking, "rather than learn all of these things in isolation and try to incorporate them sometime later, why not just do applied mini research projects that force you to thing abot how they work together?" So that's what this is. 
+
+The goal is to revisit topics that I am already (mostly) familiar with, but at an angle that is different and scary to me. Blog 1 follows many topics that I'm comfortable with: linear regression, marginal effects, sensitivity analysis, power analysis. But, Blog 1 also forces me to do them in a Bayesian manner. This means: learning how to estimate Bayesian models in practice, Bayesian model diagnostics, programming with Stan, whatever Bayesian power analysis looks like, etc. As this series goes on, I'll tackle other topics that are slightly more complex (survival analysis, dealing with hierarchical data, etc.) and I'll cross those bridges when I get there. 
+
+Admittedly, this is mostly for me. But, if any statistical good Samaritans are out there and reading this, I would always welcome feedback because, due to the nature of these blogs being self-educational, I am going to mess up! So, suggestions and corrections are always welcome.
+
+## The Research Question
+
+Yes, I could do all of this with simulated data, but I'm not trying to prove that a given estimator works or is more/less biased than another, so why not contextualize this blog with an interesting research question? Obviously, since this blog is about Bayesian linear regression, the research questions needs to be one that easily leads to a continuous outcome. 
+
+## Collect and Clean the Data ({dplyr} and {polars})
+
+```{r}
+pacman::p_load(
+  "brms",
+  install = FALSE
+)
+```
+
+## Estimation ({brms}, Stan, {PyMC})
+
+#### Diagnostics (Including Priors Sensitivity Analysis) - {brms}, Stan, {PyMC}
+
+#### Average Marginal Effect - {brms}, Stan, {PyMC}
+
+## Visualization - {ggplot} and {arviZ}
+
+## Power Analysis
+
+## Confounding Sensitivity Analysis
