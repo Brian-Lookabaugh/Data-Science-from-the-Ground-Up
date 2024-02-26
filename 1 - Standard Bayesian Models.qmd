@@ -1,0 +1,183 @@
+---
+title: "Bayesian Statistical Models"
+subtitle: "Linear Regression, Logistic Regression, Ordered Logit, Count Models, and Beta Models"
+format: html
+---
+
+##### Load the required packages.
+
+```{r}
+library(dplyr) # Data Manipulation
+library(ggplot2) # Data Visualization
+library(brms) # Bayesian Models
+library(rstanarm) # Other Ways to Estimate Bayesian Models
+library(marginaleffects) # Estimating Marginal Effects
+library(vdemdata) # Data
+```
+
+##### Load/Process the data.
+
+```{r}
+sub.vdem <- vdem %>%
+  # Select Variables of Interest
+  select(
+    country_id,
+    year,
+    v2x_polyarchy, # 0-1 Interval Measure of Democracy
+    e_v2x_polyarchy_5C, # Ordinal Measure of Democracy
+    e_peaveduc, # Count Measure of Average Number of Years of Education Attained (15+)
+    e_gdppc, # Continuous Measure of GDP per capita
+    e_pop, # Projected Population Size
+    e_civil_war # Binary Measure of 1,000+ Battle Deaths
+  ) %>%
+  # Clean and Create New Variables
+  mutate(
+    l.gdppc = log(e_gdppc + 1), # Log-Transformed GDP per capita
+    l.pop = log(e_pop + 1), # Log-Transformed Population
+    democ.bin = ifelse(v2x_polyarchy >= .6, 1, 0), # Democracy Binary Variable
+    # Shift the Ordered Democracy Value from {0, 0.25, 0.5, 0.75, 1} to {1, 2, 3, 4, 5}
+    e_v2x_polyarchy_5C = case_when(
+      e_v2x_polyarchy_5C == 0 ~ 1,
+      e_v2x_polyarchy_5C == 0.25 ~ 2,
+      e_v2x_polyarchy_5C == 0.5 ~ 3,
+      e_v2x_polyarchy_5C == 0.75 ~ 4,
+      e_v2x_polyarchy_5C == 1 ~ 5
+    )
+  ) %>%
+  # Rename Variables
+  rename(
+    democ.index = v2x_polyarchy,
+    democ.ord = e_v2x_polyarchy_5C,
+    educ = e_peaveduc,
+    civ.war = e_civil_war
+  )
+```
+
+## Linear Regression
+
+##### Optimizing/Specifying Computation
+
+```{r}
+lm.chains <- 4
+lm.iter <- 2000
+lm.warmup <- 1000
+lm.cores <- 4
+```
+
+##### Specifying Priors of Varying Confidence
+
+```{r}
+# Weakly-Informative Priors
+lm.wip <- c(
+  prior(normal(3.5, 3), class = b, coef = Intercept), # Intercept
+  prior(), # Democracy
+  prior(normal(6, 4), class = b, coef = l.pop), # Population
+  prior(), # Education
+  prior(), # Civil War
+  prior() # Standard Deviation
+)
+
+# Strongly-Informative Priors
+lm.sip <- c(
+  prior(), # Intercept
+  prior(), # Democracy
+  prior(), # Population
+  prior(), # Education
+  prior(), # Civil War
+  prior() # Standard Deviation
+)
+```
+
+##### Notation
+
+##### Estimation {brms}, {rstanarm}, Stan
+
+```{r}
+# No Specified Priors
+
+# Non-Informative Priors
+
+# Weakly-Informative Priors
+
+# Strongly-Informative Priors
+```
+
+##### Marginal Effect Visualization
+
+##### Bayesian Model Diagnostics
+
+##### Sensitivity Analyses (Priors and Confounding)
+
+##### Power Analysis
+
+## Logistic Regression
+
+##### Optimizing/Specifying Computation
+
+##### Specifying Priors of Varying Confidence
+
+##### Notation
+
+##### Estimation {brms}, {rstanarm}, Stan
+
+##### Marginal Effect Visualization
+
+##### Bayesian Model Diagnostics
+
+##### Sensitivity Analyses (Priors and Confounding)
+
+##### Power Analysis
+
+## Ordered Logistic Regression
+
+##### Optimizing/Specifying Computation
+
+##### Specifying Priors of Varying Confidence
+
+##### Notation
+
+##### Estimation {brms}, {rstanarm}, Stan
+
+##### Marginal Effect Visualization
+
+##### Bayesian Model Diagnostics
+
+##### Sensitivity Analyses (Priors and Confounding)
+
+##### Power Analysis
+
+## Count Models
+
+##### Optimizing/Specifying Computation
+
+##### Specifying Priors of Varying Confidence
+
+##### Notation
+
+##### Estimation {brms}, {rstanarm}, Stan
+
+##### Marginal Effect Visualization
+
+##### Bayesian Model Diagnostics
+
+##### Sensitivity Analyses (Priors and Confounding)
+
+##### Power Analysis
+
+## Beta Regression
+
+##### Optimizing/Specifying Computation
+
+##### Specifying Priors of Varying Confidence
+
+##### Notation
+
+##### Estimation {brms}, {rstanarm}, Stan
+
+##### Marginal Effect Visualization
+
+##### Bayesian Model Diagnostics
+
+##### Sensitivity Analyses (Priors and Confounding)
+
+##### Power Analysis
